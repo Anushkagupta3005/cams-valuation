@@ -42,11 +42,11 @@ function FlowRow({ title, steps }: { title: string; steps: Step[] }) {
   return (
     <div className="mb-4 last:mb-0">
       <p className="mb-2 text-xs font-medium text-emerald-400">{title}</p>
-      <div className="flex flex-wrap items-stretch gap-2">
+      <div className="flex items-stretch gap-2 overflow-x-auto">
         {steps.map((s, i) => (
-          <div key={s.label} className="flex items-center gap-2">
+          <div key={s.label} className="flex flex-1 items-center gap-2">
             <div
-              className={`min-w-[130px] rounded-xl border p-3 ${
+              className={`min-w-0 flex-1 rounded-xl border p-3 ${
                 s.highlight
                   ? "border-emerald-500/60 bg-emerald-500/10"
                   : "border-slate-700 bg-slate-950/60"
