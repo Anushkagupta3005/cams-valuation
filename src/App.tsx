@@ -3,6 +3,7 @@ import { CAMS, BASE_CASE, type Assumptions } from "./model/inputs";
 import { runDcf } from "./model/dcf";
 import { FlowView } from "./components/FlowView";
 import { SensitivityHeatmap } from "./components/SensitivityHeatmap";
+import { CreditPanel } from "./components/CreditPanel";
 
 // Growth tapers from the starting rate: e.g. 12% → 12, 11, 10, 10, 9
 const TAPER = [0, 0.01, 0.02, 0.02, 0.03];
@@ -105,7 +106,8 @@ export default function App() {
               </div>
             )}
                       {result && <FlowView r={result} c={CAMS} />}
-                      {result && <SensitivityHeatmap c={CAMS} a={a} />}  
+                      {result && <SensitivityHeatmap c={CAMS} a={a} />} 
+                      <CreditPanel c={CAMS} /> 
           </main>
         </div>
       </div>
