@@ -1,122 +1,52 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useMemo } from "react";
+import { CAMS, BASE_CASE } from "./model/inputs";
+import { runDcf } from "./model/dcf";
 
-function App() {
-  const [count, setCount] = useState(0)
+const rs = (n: number) =>
+  "₹" + n.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+const pct = (n: number) => (n * 100).toFixed(1) + "%";
+
+export default function App() {
+  const a = BASE_CASE;
+  const result = useMemo(() => runDcf(CAMS, a), [a]);
+  const up = result.upside >= 0;
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <div className="mx-auto max-w-6xl px-6 py-10">
+        <header className="mb-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+            DCF · Credit Analysis
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+          <h1 className="mt-2 text-3xl font-semibold">CAMS Valuation Explorer</h1>
+          <p className="mt-1 text-sm text-slate-400">
+            Computer Age Management Services · FY26 base year · ₹ crore
+          </p>
+        </header>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <section className="grid gap-4 sm:grid-cols-3">
+          <Stat label="Intrinsic value / share" value={rs(result.valuePerShare)} />
+          <Stat label="Market price" value={rs(CAMS.marketPrice)} />
+          <Stat
+            label="Upside / downside"
+            value={(up ? "+" : "") + pct(result.upside)}
+            tone={up ? "good" : "bad"}
+          />
+        </section>
+      </div>
+    </div>
+  );
 }
 
-export default App
+function Stat({
+  label, value, tone,
+}: { label: string; value: string; tone?: "good" | "bad" }) {
+  const color =
+    tone === "good" ? "text-emerald-400" : tone === "bad" ? "text-rose-400" : "text-slate-100";
+  return (
+    <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-lg">
+      <p className="text-xs uppercase tracking-wider text-slate-400">{label}</p>
+      <p className={`mt-2 text-3xl font-semibold tabular-nums ${color}`}>{value}</p>
+    </div>
+  );
+}
