@@ -52,7 +52,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="mx-auto max-w-screen-2xl px-6 py-10 lg:px-10">
         <header className="mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
             DCF · Credit Analysis
