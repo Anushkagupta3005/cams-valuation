@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { CAMS, BASE_CASE, type Assumptions } from "./model/inputs";
 import { runDcf } from "./model/dcf";
 import { FlowView } from "./components/FlowView";
+import { SensitivityHeatmap } from "./components/SensitivityHeatmap";
 
 // Growth tapers from the starting rate: e.g. 12% → 12, 11, 10, 10, 9
 const TAPER = [0, 0.01, 0.02, 0.02, 0.03];
@@ -103,7 +104,8 @@ export default function App() {
                 WACC must be higher than terminal growth. Adjust the sliders.
               </div>
             )}
-                      {result && <FlowView r={result} c={CAMS} />}  
+                      {result && <FlowView r={result} c={CAMS} />}
+                      {result && <SensitivityHeatmap c={CAMS} a={a} />}  
           </main>
         </div>
       </div>
