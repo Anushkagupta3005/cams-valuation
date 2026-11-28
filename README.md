@@ -2,7 +2,7 @@
 
 An interactive DCF and credit analysis of **Computer Age Management Services (CAMS)**, India's largest mutual fund registrar. I first built the model by hand in Excel, then rebuilt it as a tested TypeScript engine with a React dashboard.
 
-**Live demo:** _link coming soon_
+**Live demo:**  https://cams-valuation.vercel.app/
 
 ## What it does
 - **DCF valuation:** 5-year free cash flow forecast → CAPM-based WACC → terminal value → value per share vs market price
