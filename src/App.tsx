@@ -64,7 +64,7 @@ export default function App() {
 
         <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
           {/* Assumptions panel */}
-          <aside className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+          <aside className="self-start rounded-2xl border border-slate-800 bg-slate-900/60 p-5 lg:sticky lg:top-6">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
                 Assumptions
